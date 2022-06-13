@@ -1,11 +1,15 @@
 // recipe backend.
 
-// MONGODB PORT 
+// MONGODB PORT
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+
 const sessions = require('sessions')
 const expSess =  require('express-sessions')
+
+const {errorHandler} = require('./middleWare/errorMiddleWare')
+
 const methodOverride = require('method-override')
 const cors = require('cors')
 
@@ -45,16 +49,19 @@ db.on('disconnected', ()=> console.log('Mongo is now Disconnected, Have a good d
 // }
 // app.use(cors(corsOptions))
 
-app.get('/', (req, res)=>{
-    console.log("main page working")
-    res.send(`<h1>Working properly</h1>`)
 
 // user models
 const userControllers = require('./controllers/users')
 app.use('/user', userControllers)
+
+// middleWare
+//app.use(errorHandler)
+
+
+app.get('/', (req, res)=>{
+    console.log("main page working")
+    res.send(`<h1>Working properly</h1>`)
 })
-
-
 
 app.listen(PORT, (req, res)=>{
     console.log("server running -->", PORT)

@@ -1,7 +1,11 @@
 const express = require('express')
+const jwt = require('jsonwebtoken')
+const asyncHandler = require('express-async-handler')
 const router = express.Router()
 const User = require('../models/users')
 const bcrypt = require('bcrypt')
+
+
 
 // view full database
 router.get('/database', (req, res)=>{
@@ -16,33 +20,60 @@ router.get('/database', (req, res)=>{
     })
 })
 
-
 // login
 router.post('/login', (req, res)=>{
-    // need to verify user password....?
-    console.log(req.body, ", login route hit")
-    User.findOne({email: req.body.email}, (error, foundUser)=>{
-        if (error){
-            res.status(400).json({error: error.message})
-        }
-        console.log(foundUser, " this is the logged in user.");
-        res.status(200).json(foundUser)
-    })
+    // see if user paid.....$$
+    const {email, password} = req.body
+    const user = User.findOne({email})
+
+    if (user && (bcrypt.compare(password, user.password))){
+        res.status(201).json({
+            _id: user.id,
+            name: user.name,
+            email: user.email,
+            token: genToken(user._id)
+        })
+    } else {
+        res.status(400)
+        throw new Error('Invalid credentials')
+    }
 })
 
 
 // register
-route.post('/register', (req, res)=>{
-    console.log('register', req.body)
-    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
-    User.create(req.body, (error, createdUser) => {
-        if (error) {
-            res.status(400).json({ error: error.message })
-        } else {
-            console.log(createdUser);
-            res.status(200).json(createdUser)
-        }
+router.post('/register', (req, res)=>{
+    const {name, email, password } = req.body
+    // check if they are sent properly
+    if (!name || !email || !password){
+        res.status(400)
+        throw new Error('Please fill in all fields')
+    }
+    // see if user exists
+    const userExists = User.findOne({email})
+    if (userExists) {
+        res.status(400)
+        throw new Error('User already exists')
+    }
+    // hash password
+    const salt = bcrypt.genSalt(10)
+    const hashedPassword = bcrypt.hash(password, salt)
+    // create user in db
+    const user = User.create({
+        name,
+        email,
+        password: hashedPassword,
     })
+    if (user){
+        res.status(201).json({
+            _id: user.id,
+            name: user.name,
+            email: user.email,
+            token: genToken(user._id)
+        })
+    } else {
+        res.status(400)
+        throw new Error('Invalid user data')
+    }
 })
 
 

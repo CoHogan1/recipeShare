@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
-const { schems, model } = mongoose
+const { Schema, model } = mongoose
 
 // create user object
-const userSchema = new Schema ({
+const userSchema = new Schema({
     // required for identification on app.
     username: {type: String, required: true},
     name:     {type: String, required: true},
