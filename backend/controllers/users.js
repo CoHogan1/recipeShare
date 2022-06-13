@@ -1,10 +1,14 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
-const asyncHandler = require('express-async-handler')
+//const asyncHandler = require('express-async-handler')
 const router = express.Router()
 const User = require('../models/users')
 const bcrypt = require('bcrypt')
 
+router.get('/', (req, res)=>{
+    console.log("working")
+    res.send("user")
+})
 
 
 // view full database

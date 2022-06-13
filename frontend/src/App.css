@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+}
+
+.data {
+    margin: 20px auto;
+    border: 5px solid black;
+    width: 900px;
+
+}

@@ -36,23 +36,23 @@ db.on('connected', ()=> console.log('Mongo connected'))
 db.on('disconnected', ()=> console.log('Mongo is now Disconnected, Have a good day!'))
 
 // cors handeling.
-// const whitelist = ['http://localhost:3000','http://localhost:3001','https://updatedprojectonebackend.herokuapp.com/','https://updatedprojectonefrontend.herokuapp.com/']// all strings.
-// const corsOptions = {
-//     origin: (origin, callback) => {
-//         if (whitelist.indexOf(origin) !== -1) {
-//             // -1 outside the array
-//             callback(null, true)
-//         } else {
-//             callback(new Error(`Not allowed by CORS`))
-//         }
-//     }
-// }
-// app.use(cors(corsOptions))
+const whitelist = ['http://localhost:3000']// all strings.
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (whitelist.indexOf(origin) !== -1) {
+            // -1 outside the array
+            callback(null, true)
+        } else {
+            callback(new Error(`Not allowed by CORS`))
+        }
+    }
+}
+app.use(cors(corsOptions))
 
 
 // user models
 const userControllers = require('./controllers/users')
-app.use('/user', userControllers)
+app.use('/users', userControllers)
 
 // middleWare
 //app.use(errorHandler)
