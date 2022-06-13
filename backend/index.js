@@ -1,4 +1,6 @@
 // recipe backend.
+
+// MONGODB PORT 
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
@@ -7,10 +9,10 @@ const expSess =  require('express-sessions')
 const methodOverride = require('method-override')
 const cors = require('cors')
 
-const mongoURI = 'mongodb://127.0.0.1:27017/' + 'recipe' // || process.env.MONGODB
+const mongoURI = process.env.MONGODB || 'mongodb://127.0.0.1:27017/' + 'recipe'
 const db = mongoose.connection
 
-const PORT = 4000 // || process.env.PORT
+const PORT = process.env.PORT || 4000
 
 const app = express()
 app.use(express.json())
