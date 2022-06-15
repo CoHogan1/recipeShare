@@ -32,10 +32,6 @@ function App() {
 
         <div className="data">
             <button onClick={getData}>get db</button>
-            <h3>total database diaplayed below.</h3>
-            <p>{data.map(x => {
-                    return<p>{x}</p>
-                })}</p>
         </div>
 
         <Form />

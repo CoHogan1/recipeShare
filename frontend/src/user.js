@@ -87,9 +87,10 @@ function App() {
             }
             const result = await resp.json()
             //console.log(JSON.stringify(result, null))
-            console.log(result, " this is the logged in user.");
+            console.log(result);
+            setLog(result)
             clearForm()
-            //setLog(result)
+            console.log(log," working?")
         } catch (err){
             console.log(err)
         }
@@ -133,6 +134,8 @@ function App() {
         <div className="users">
             <h1>Login Please</h1>
             <p className="error-message">{error}</p>
+            <p>{log.username}</p>
+
 
             <div className="">
                 <form className="register form" onSubmit={register}>

@@ -12,6 +12,8 @@ const genToken = (id) => {
   })
 }
 
+// router('/logout',(req, res)=>{})
+
 router.get('/', (req, res)=>{
     console.log("working")
     res.send("user")
