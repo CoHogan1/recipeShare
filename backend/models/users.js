@@ -11,6 +11,5 @@ const userSchema = new Schema({
     friends:  {type:Array },
 }, {timestamp: true})
 
-const User = model('user', userSchema)
-
+const User = model('User', userSchema)
 module.exports = User

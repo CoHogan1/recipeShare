@@ -1,14 +1,16 @@
 import './App.css';
 import React, { useState } from 'react';
 
-import Form from './login.js'
+import Form from './user.js'
 
 function App() {
-    console.log("getting data")
-    let [data, setData] =  useState(null)
+    //console.log("app loaded");
+    let [data, setData] =  useState([])
+
     const getData = async () => {
+        console.log("getting data")
         try{
-            const resp = await fetch('http://localhost:4000/users/database', {
+            const resp = await fetch('http://localhost:4000/api/users/database', {
                 method: 'GET',
             })
             if (!resp.ok) {
@@ -16,7 +18,8 @@ function App() {
             }
             const result = await resp.json()
             //console.log(JSON.stringify(result, null))
-            setData(result)
+            console.log(result);
+            //setData(result)
         } catch (err){
             console.log(err)
         }
@@ -30,7 +33,9 @@ function App() {
         <div className="data">
             <button onClick={getData}>get db</button>
             <h3>total database diaplayed below.</h3>
-            <p>{data}</p>
+            <p>{data.map(x => {
+                    return<p>{x}</p>
+                })}</p>
         </div>
 
         <Form />
