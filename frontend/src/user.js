@@ -26,11 +26,6 @@ function App() {
         setPassLog('')
     }
 
-    const handleSubmit = (e) =>{
-        e.preventDefault()
-        console.log("submitted");
-    }
-
     const checkPass = () => {
         console.log("checking pass");
         if (password === password2 && password !== '' && password2 !== ''){
@@ -38,13 +33,43 @@ function App() {
         } else {
             setError('Passwords Do not Match :(')
         }
+        return false
     }
 
+    const checkFillReg = () => {
+        if (userName === ''){
+            setError('Please fill Username')
+            return true
+        }
+        if (email === ''){
+            setError('Please fill email')
+            return true
+        }
+        if (password === ''){
+            setError('Please add a password')
+            return true
+        }
+        return false
+    }
 
+    const checkFillLog = () => {
+        if (emailLog === ''){
+            setError('Please fill email')
+            return true
+        }
+        if (passLog === ''){
+            setError('Please add a password')
+            return true
+        }
+        return false
+    }
 
     const login = async (e) => {
-        console.log('login route')
         e.preventDefault()
+        if(checkFillLog()){
+            return
+        }
+
         try{
             const resp = await fetch('http://localhost:4000/api/users/login', {
                 //credentials: 'include',
@@ -71,9 +96,13 @@ function App() {
     }
 
     const register = async (e) => {
-        console.log(email, password, userName);
         e.preventDefault()
-        console.log('register route')
+        if(checkFillReg()){
+            return
+        }
+        if (!checkPass()){
+            return
+        }
         try{
             const resp = await fetch('http://localhost:4000/api/users/reg', {
                 //credentials: 'include',
@@ -100,15 +129,10 @@ function App() {
         }
     }
 
-
-
-
-
-
     return (
         <div className="users">
-            <h1>user control</h1>
-            <p>error:{error}</p>
+            <h1>Login Please</h1>
+            <p className="error-message">{error}</p>
 
             <div className="">
                 <form className="register form" onSubmit={register}>
@@ -135,7 +159,8 @@ function App() {
             <div className="">
                 <form className="login form" onSubmit={login}>
 
-                    <input placeholder="Email" onChange={e => setEmailLog(e.target.value)}
+                    <input placeholder="Email"
+                        onChange={e => setEmailLog(e.target.value)}
                         name="email" value={emailLog} ></input>
 
                     <input placeholder="password" type="password"
