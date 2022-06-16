@@ -1,7 +1,9 @@
 import './App.css';
 import React, { useState } from 'react';
 
-import Form from './user.js'
+import Nav from './navigation.js'
+import Login from './user.js'
+//import Dash from './dashboard.js'
 
 function App() {
     //console.log("app loaded");
@@ -28,13 +30,15 @@ function App() {
 
   return (
     <div className="App">
-        <h1>frontend running</h1>
+        <Nav />
+
+
 
         <div className="data">
             <button onClick={getData}>get db</button>
         </div>
 
-        <Form />
+        <Login />
 
     </div>
   );

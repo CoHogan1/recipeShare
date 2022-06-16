@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
+import Dash from './dashboard.js'
 
 function App() {
     const [auth, setAuth] = useState(0)
@@ -132,6 +133,7 @@ function App() {
 
     return (
         <div className="users">
+            <Dash />
             <h1>Login Please</h1>
             <p className="error-message">{error}</p>
             <p>{log.username}</p>
